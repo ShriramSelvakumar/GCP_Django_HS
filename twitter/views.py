@@ -1,7 +1,6 @@
 import json
 from django.http import JsonResponse, HttpResponse
 import pandas as pd
-from .models import Users
 from sklearn.preprocessing import LabelEncoder
 from NLP.ReadTwitterData import ReadTwitterData
 import NLP.HSCNN as CNN
@@ -11,42 +10,19 @@ import os
 
 label_encoder = LabelEncoder()
 label_encoder.fit(['NONE', 'PRFN', 'OFFN', 'HATE'], )
-# consumer_key = 'boEJnpJF4kcfWSCDDHIpHjRL9'
-# consumer_secret = 'YCWGzqe3MmjD1cBGKpEZoNp9ieuheJs4zp1CzYKR0JrQU4ePui'
-# access_token = '406291233-uKGlGhDoPCvmO84ZQpKgDFjtOcbUYtSlQzwQFGFZ'
-# access_token_secret = 'Nr7eMLJIoZcvllAX2rOCflj8bzsqcd4irNwDr1b1M8kdC'
+consumer_key = 'boEJnpJF4kcfWSCDDHIpHjRL9'
+consumer_secret = 'YCWGzqe3MmjD1cBGKpEZoNp9ieuheJs4zp1CzYKR0JrQU4ePui'
+access_token = '406291233-uKGlGhDoPCvmO84ZQpKgDFjtOcbUYtSlQzwQFGFZ'
+access_token_secret = 'Nr7eMLJIoZcvllAX2rOCflj8bzsqcd4irNwDr1b1M8kdC'
 # key = [consumer_key, consumer_secret, access_token, access_token_secret]
 # twitter_api = ReadTwitterData(key)
 
 @csrf_exempt
 def new_user(request):
     if request.POST:
-        if not request.session.exists(request.session.session_key):
-            request.session.create()
-
-        fields = ['consumer_key', 'consumer_secret', 'access_token', 'access_token_secret']
-        consumer_key = request.POST.get("consumer_key", '')
-        consumer_secret = request.POST.get("consumer_secret", '')
-        access_token = request.POST.get("access_token", '')
-        access_token_secret = request.POST.get("access_token_secret", '')
         user_session = 'oiqxx48zqh3njeosu8v1i0auam78mobf'
         print([consumer_key, consumer_secret, access_token, access_token_secret, user_session])
-        queryset = Users.objects.filter(user_session=user_session)
-        if queryset.exists():
-            user = queryset[0]
-            user.consumer_key = consumer_key
-            user.consumer_secret = consumer_secret
-            user.access_token = access_token
-            user.access_token_secret = access_token_secret
-            # user.save(update_fields=['consumer_key', 'consumer_secret', 'access_token', 'access_token_secret'])
-            # a = pd.DataFrame([consumer_key, consumer_secret, access_token, access_token_secret], columns=fields)
-            # return a.to_json()
-            return JsonResponse({'message': 'Updated user', 'session_key': user_session})
-        else:
-            # user = Users(user_session=user_session, consumer_key=consumer_key, consumer_secret=consumer_secret,
-                         # access_token=access_token, access_token_secret=access_token_secret)
-            # user.save()
-            return JsonResponse({'message': 'Created User', 'session_key': user_session})
+        return JsonResponse({'message': 'Created User', 'session_key': user_session})
     return JsonResponse({'message': 'Something Went wrong'})
 
 
@@ -56,12 +32,9 @@ def user_mentions_2(request):
     user_session = request.POST.get("session_key", '')
     print(user_session)
     # return HttpResponse(user_session)
-    queryset = Users.objects.filter(user_session=user_session)
-    if queryset.exists():
-        user = queryset[0]
-        twitter_api = ReadTwitterData([user.consumer_key, user.consumer_secret,
-                                       user.access_token, user.access_token_secret])
-        print([user.consumer_key, user.consumer_secret, user.access_token, user.access_token_secret])
+    if True:
+        twitter_api = ReadTwitterData([consumer_key, consumer_secret,
+                                       access_token, access_token_secret])
         count = request.POST.get("count", '')
         print([count])
         # return JsonResponse({'message': 'So far so good', 'session_key': user_session})
@@ -84,12 +57,9 @@ def search_tweets(request):
     user_session = request.POST.get("session_key", '')
     print(user_session)
     # return HttpResponse(user_session)
-    queryset = Users.objects.filter(user_session=user_session)
-    if queryset.exists():
-        user = queryset[0]
-        twitter_api = ReadTwitterData([user.consumer_key, user.consumer_secret,
-                                       user.access_token, user.access_token_secret])
-        print([user.consumer_key, user.consumer_secret, user.access_token, user.access_token_secret])
+    if True:
+        twitter_api = ReadTwitterData([consumer_key, consumer_secret,
+                                       access_token, access_token_secret])
         count = request.POST.get("count", '')
         lang = request.POST.get("lang", '')
         q = request.POST.get("query", '')
@@ -169,12 +139,10 @@ def block_users_json(request):
     print('----------------------')
     print(block_users)
     print('----------------------')
-    queryset = Users.objects.filter(user_session=body['session_key'])
-    if queryset.exists():
+    if True:
         print('Test-----------------------')
-        user = queryset[0]
-        twitter_api = ReadTwitterData([user.consumer_key, user.consumer_secret,
-                                       user.access_token, user.access_token_secret])
+        twitter_api = ReadTwitterData([consumer_key, consumer_secret,
+                                       access_token, access_token_secret])
         twitter_api.block_users(block_users)
     print('So far so good')
     return JsonResponse({'message': 'So far so good'})
@@ -207,12 +175,10 @@ def mute_users_json(request):
     print('----------------------')
     print(mute_users)
     print('----------------------')
-    queryset = Users.objects.filter(user_session=body['session_key'])
-    if queryset.exists():
+    if True:
         print('Test-----------------------')
-        user = queryset[0]
-        twitter_api = ReadTwitterData([user.consumer_key, user.consumer_secret,
-                                       user.access_token, user.access_token_secret])
+        twitter_api = ReadTwitterData([consumer_key, consumer_secret,
+                                       access_token, access_token_secret])
         twitter_api.mute_users(mute_users)
     print('So far so good')
     return JsonResponse({'message': 'So far so good'})
