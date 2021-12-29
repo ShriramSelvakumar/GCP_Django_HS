@@ -1,0 +1,13 @@
+Django==3.2.8
+django-cors-headers==3.10.0
+djangorestframework==3.12.4
+nltk==3.6.3
+openpyxl==3.0.9
+pandas
+Pillow==8.3.2
+regex==2021.9.30
+requests==2.26.0
+scikit-learn==0.24.2
+tensorflow==2.5.0
+tweepy==4.1.0
+gunicorn>=20.1.0,<20.2
