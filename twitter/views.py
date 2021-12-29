@@ -44,7 +44,7 @@ def new_user(request):
             return JsonResponse({'message': 'Updated user', 'session_key': user_session})
         else:
             # user = Users(user_session=user_session, consumer_key=consumer_key, consumer_secret=consumer_secret,
-                         access_token=access_token, access_token_secret=access_token_secret)
+                         # access_token=access_token, access_token_secret=access_token_secret)
             # user.save()
             return JsonResponse({'message': 'Created User', 'session_key': user_session})
     return JsonResponse({'message': 'Something Went wrong'})
