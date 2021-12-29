@@ -38,14 +38,14 @@ def new_user(request):
             user.consumer_secret = consumer_secret
             user.access_token = access_token
             user.access_token_secret = access_token_secret
-            user.save(update_fields=['consumer_key', 'consumer_secret', 'access_token', 'access_token_secret'])
+            # user.save(update_fields=['consumer_key', 'consumer_secret', 'access_token', 'access_token_secret'])
             # a = pd.DataFrame([consumer_key, consumer_secret, access_token, access_token_secret], columns=fields)
             # return a.to_json()
             return JsonResponse({'message': 'Updated user', 'session_key': user_session})
         else:
-            user = Users(user_session=user_session, consumer_key=consumer_key, consumer_secret=consumer_secret,
+            # user = Users(user_session=user_session, consumer_key=consumer_key, consumer_secret=consumer_secret,
                          access_token=access_token, access_token_secret=access_token_secret)
-            user.save()
+            # user.save()
             return JsonResponse({'message': 'Created User', 'session_key': user_session})
     return JsonResponse({'message': 'Something Went wrong'})
 
